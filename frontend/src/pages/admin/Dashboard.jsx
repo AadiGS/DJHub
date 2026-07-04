@@ -645,7 +645,7 @@ function ManageAdminsSection({ branches }) {
   const [status, setStatus] = useState('idle')
   const [listError, setListError] = useState(null)
 
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [branchId, setBranchId] = useState('')
   const [formError, setFormError] = useState(null)
@@ -673,8 +673,8 @@ function ManageAdminsSection({ branches }) {
     setFormError(null)
     setSubmitting(true)
     try {
-      await createAdmin({ email, password, branch_id: Number(branchId) })
-      setEmail('')
+      await createAdmin({ username, password, branch_id: Number(branchId) })
+      setUsername('')
       setPassword('')
       setBranchId('')
       refreshAdmins()
@@ -686,7 +686,7 @@ function ManageAdminsSection({ branches }) {
   }
 
   async function handleRevoke(admin) {
-    if (!window.confirm(`Revoke access for "${admin.email}"? This cannot be undone.`)) return
+    if (!window.confirm(`Revoke access for "${admin.username}"? This cannot be undone.`)) return
     setListError(null)
     try {
       await deleteAdmin(admin.id)
@@ -704,14 +704,14 @@ function ManageAdminsSection({ branches }) {
 
       <form onSubmit={handleSubmit} className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end">
         <div className="flex-1">
-          <label className={labelClass}>Email</label>
+          <label className={labelClass}>Username</label>
           <input
             required
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             className={inputClass}
-            placeholder="admin@djsce.in"
+            placeholder="it_admin"
           />
         </div>
         <div className="flex-1">
@@ -757,7 +757,7 @@ function ManageAdminsSection({ branches }) {
                 className="flex items-center justify-between rounded-lg border border-slate-200 bg-white px-3 py-2"
               >
                 <div>
-                  <p className="text-sm font-medium text-slate-900">{admin.email}</p>
+                  <p className="text-sm font-medium text-slate-900">{admin.username}</p>
                   <p className="text-xs text-slate-500">{branch?.name ?? `Branch #${admin.branch_id}`}</p>
                 </div>
                 <button

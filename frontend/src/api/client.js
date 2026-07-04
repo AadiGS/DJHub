@@ -65,8 +65,8 @@ export function getSubject(subjectId) {
   return request(`/api/subjects/${subjectId}`)
 }
 
-export async function login(email, password) {
-  const body = new URLSearchParams({ username: email, password })
+export async function login(username, password) {
+  const body = new URLSearchParams({ username, password })
   const data = await request('/api/auth/login', { method: 'POST', body })
   setToken(data.access_token)
   return data

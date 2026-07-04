@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict, EmailStr, model_validator
+from pydantic import BaseModel, ConfigDict, model_validator
 
 from app.models import ExamType, MaterialType
 
@@ -139,7 +139,7 @@ class PYQUpdate(BaseModel):
 
 
 class UserCreate(BaseModel):
-    email: EmailStr
+    username: str
     password: str
     branch_id: int
 
@@ -148,6 +148,6 @@ class UserOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
-    email: str
+    username: str
     role: str
     branch_id: Optional[int] = None

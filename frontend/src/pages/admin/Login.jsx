@@ -6,7 +6,7 @@ export default function Login() {
   const { login } = useAuth()
   const navigate = useNavigate()
 
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState(null)
   const [submitting, setSubmitting] = useState(false)
@@ -16,7 +16,7 @@ export default function Login() {
     setError(null)
     setSubmitting(true)
     try {
-      await login(email, password)
+      await login(username, password)
       navigate('/admin', { replace: true })
     } catch (err) {
       setError(err.message)
@@ -38,18 +38,18 @@ export default function Login() {
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label htmlFor="email" className="mb-1 block text-sm font-medium text-slate-700">
-              Email
+            <label htmlFor="username" className="mb-1 block text-sm font-medium text-slate-700">
+              Username
             </label>
             <input
-              id="email"
-              type="email"
+              id="username"
+              type="text"
               required
               autoComplete="username"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-              placeholder="admin@djsce.in"
+              placeholder="admin"
             />
           </div>
 

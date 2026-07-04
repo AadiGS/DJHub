@@ -21,8 +21,8 @@ export function AuthProvider({ children }) {
     return token ? decodeToken(token) : null
   })
 
-  const login = useCallback(async (email, password) => {
-    const data = await apiLogin(email, password)
+  const login = useCallback(async (username, password) => {
+    const data = await apiLogin(username, password)
     setUser(decodeToken(data.access_token))
   }, [])
 

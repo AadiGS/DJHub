@@ -300,7 +300,7 @@ async def list_users(
     current_user: User = Depends(get_current_superadmin),
     db: AsyncSession = Depends(get_db),
 ):
-    result = await db.execute(select(User).order_by(User.email))
+    result = await db.execute(select(User).order_by(User.username))
     return result.scalars().all()
 
 
@@ -315,7 +315,7 @@ async def create_user(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Branch not found")
 
     user = User(
-        email=payload.email,
+        username=payload.username,
         hashed_password=get_password_hash(payload.password),
         role=UserRole.BRANCH_ADMIN,
         branch_id=payload.branch_id,
@@ -325,7 +325,7 @@ async def create_user(
         await db.commit()
     except IntegrityError:
         await db.rollback()
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="A user with this email already exists")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="A user with this username already exists")
     return user
 
 

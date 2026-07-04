@@ -6,26 +6,26 @@ from app.auth import get_password_hash
 from app.database import AsyncSessionLocal
 from app.models import User, UserRole
 
-EMAIL = "admin@djsce.in"
+USERNAME = "admin"
 PASSWORD = "adminpassword"
 
 
 async def create_superadmin():
     async with AsyncSessionLocal() as session:
-        existing = (await session.execute(select(User).where(User.email == EMAIL))).scalar_one_or_none()
+        existing = (await session.execute(select(User).where(User.username == USERNAME))).scalar_one_or_none()
         if existing is not None:
-            print(f"User {EMAIL} already exists (role={existing.role.value}). Nothing to do.")
+            print(f"User {USERNAME} already exists (role={existing.role.value}). Nothing to do.")
             return
 
         user = User(
-            email=EMAIL,
+            username=USERNAME,
             hashed_password=get_password_hash(PASSWORD),
             role=UserRole.SUPERADMIN,
             branch_id=None,
         )
         session.add(user)
         await session.commit()
-        print(f"Superadmin created: {EMAIL}")
+        print(f"Superadmin created: {USERNAME}")
 
 
 if __name__ == "__main__":
