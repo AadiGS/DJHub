@@ -7,7 +7,13 @@ app = FastAPI(title="DJ Hub API", version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origin_regex=r"http://(localhost|127\.0\.0\.1):\d+",
+    allow_origins=[
+        "https://dj-hub-green.vercel.app", 
+        "http://localhost:5173", 
+        "http://127.0.0.1:5173", 
+        "http://localhost:8000", 
+        "http://127.0.0.1:8000"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
