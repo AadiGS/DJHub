@@ -781,7 +781,7 @@ export default function Dashboard() {
   const navigate = useNavigate()
 
   const [branches, setBranches] = useState([])
-  const [branchId, setBranchId] = useState('')
+  const [branchId, setBranchId] = useState(user?.branch_id ? String(user.branch_id) : '')
   const [semester, setSemester] = useState('')
 
   const [subjects, setSubjects] = useState([])
@@ -902,7 +902,7 @@ export default function Dashboard() {
       <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
         <div>
           <label className={labelClass}>Branch</label>
-          <select value={branchId} onChange={handleBranchChange} className={inputClass}>
+          <select value={branchId} onChange={handleBranchChange} disabled={user?.role === 'branch_admin'} className={inputClass}>
             <option value="">Select branch…</option>
             {branches.map((b) => (
               <option key={b.id} value={b.id}>

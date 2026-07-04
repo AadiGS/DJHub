@@ -20,5 +20,5 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends(), db: AsyncSessi
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    access_token = create_access_token(data={"sub": user.username, "role": user.role.value})
+    access_token = create_access_token(data={"sub": user.username, "role": user.role.value, "branch_id": user.branch_id})
     return {"access_token": access_token, "token_type": "bearer"}
