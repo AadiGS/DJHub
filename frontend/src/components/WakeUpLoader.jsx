@@ -19,8 +19,8 @@ export default function WakeUpLoader({ children }) {
 
     const ping = async () => {
       try {
-        const res = await checkHealth()
-        if (res.status === 'awake' && isMounted.current) {
+        await checkHealth()
+        if (isMounted.current) {
           setIsAwake(true)
           setShowLoader(false)
         }
