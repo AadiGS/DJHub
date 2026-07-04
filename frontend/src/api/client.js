@@ -49,6 +49,14 @@ async function request(path, options = {}) {
   return body
 }
 
+export async function checkHealth() {
+  const res = await fetch(`${BASE_URL}/api/health`, {
+    signal: AbortSignal.timeout(5000)
+  })
+  if (!res.ok) throw new Error('Health check failed')
+  return res.json()
+}
+
 export function getBranches() {
   return request('/api/branches')
 }

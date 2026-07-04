@@ -7,26 +7,29 @@ import MaterialList from './pages/MaterialList'
 import Login from './pages/admin/Login'
 import Dashboard from './pages/admin/Dashboard'
 import ProtectedRoute from './components/admin/ProtectedRoute'
+import WakeUpLoader from './components/WakeUpLoader'
 
 export default function App() {
   return (
     <div className="min-h-screen bg-slate-50">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<BranchSelect />} />
-        <Route path="/branch/:branchId" element={<SemesterSelect />} />
-        <Route path="/branch/:branchId/sem/:semester" element={<SubjectList />} />
-        <Route path="/subject/:subjectId" element={<MaterialList />} />
-        <Route path="/admin/login" element={<Login />} />
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+      <WakeUpLoader>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<BranchSelect />} />
+          <Route path="/branch/:branchId" element={<SemesterSelect />} />
+          <Route path="/branch/:branchId/sem/:semester" element={<SubjectList />} />
+          <Route path="/subject/:subjectId" element={<MaterialList />} />
+          <Route path="/admin/login" element={<Login />} />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </WakeUpLoader>
     </div>
   )
 }
