@@ -47,12 +47,12 @@ async def get_or_create_subject(
     return subject
 
 
-async def get_or_create_module(session, name: str, subject_id: int) -> Module:
+async def get_or_create_module(session, title: str, position: int, subject_id: int) -> Module:
     module = (
-        await session.execute(select(Module).where(Module.name == name, Module.subject_id == subject_id))
+        await session.execute(select(Module).where(Module.title == title, Module.subject_id == subject_id))
     ).scalar_one_or_none()
     if module is None:
-        module = Module(name=name, subject_id=subject_id)
+        module = Module(title=title, position=position, subject_id=subject_id)
         session.add(module)
         await session.flush()
     return module
@@ -96,21 +96,13 @@ async def seed():
         physics = await get_or_create_subject(session, "Engineering Physics", 1, branches["FE"].id)
         dbms = await get_or_create_subject(session, "Database Management Systems", 3, branches["AIDS"].id)
 
-        module1 = await get_or_create_module(session, "Module 1: Relational Algebra", dbms.id)
-
-        await get_or_create_material(
-            session,
-            "2024 End Sem PYQ",
-            MaterialType.PYQ,
-            "https://example.com/dummy-pyq.pdf",
-            module_id=module1.id,
-        )
+        module1 = await get_or_create_module(session, "Relational Algebra", 1, dbms.id)
 
         data_structures = await get_or_create_subject(
             session, "Data Structures", 3, branches["AIDS"].id, has_theory=True, has_lab=True
         )
 
-        ds_module1 = await get_or_create_module(session, "Module 1: Stacks and Queues", data_structures.id)
+        ds_module1 = await get_or_create_module(session, "Stacks and Queues", 1, data_structures.id)
         await get_or_create_material(
             session,
             "Stack & Queue Cheat Sheet",
@@ -120,7 +112,7 @@ async def seed():
         )
 
         ds_experiment1 = await get_or_create_experiment(
-            session, 1, "Experiment 1: Implementation of Stacks using Arrays", data_structures.id
+            session, 1, "Implementation of Stacks using Arrays", data_structures.id
         )
         await get_or_create_material(
             session,
