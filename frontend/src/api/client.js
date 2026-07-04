@@ -50,7 +50,8 @@ async function request(path, options = {}) {
 }
 
 export async function checkHealth() {
-  const res = await fetch(`${BASE_URL}/api/health`, {
+  const res = await fetch(`${BASE_URL}/api/health?t=${Date.now()}`, {
+    cache: 'no-store',
     signal: AbortSignal.timeout(5000)
   })
   if (!res.ok) throw new Error('Health check failed')
